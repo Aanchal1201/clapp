@@ -1,0 +1,18 @@
+  {% for post in allposts %}
+  <div class="card col-lg-3 col-md-5 col-sm-9 p-0 m-4">
+  <a href="/blog/{{post.slug}}" class="text-light">
+    <div class="img-container">
+      <img src="/media/{{post.image}}" class="card-img" alt="...">
+    </div>
+    <div class="card-img-overlay">
+        <h5 class="card-title">{{post.title}}</h5>
+    </div>
+      </a>
+    <div class="card-footer">
+      <small class="text-muted">({{post.timeRead}} read) {{post.dateUpdate.date}} by
+        <a href="/blog/viewAuthorProfile/{{post.authorUsername.username}}"> {{post.authorUsername}}</a>
+        </small>
+    </div>
+  </div>
+  {% endfor %}
+<!-- <p class="card-text mb-auto">{{post.content |safe | truncatechars:50}}</p>  -->

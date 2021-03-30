@@ -1,0 +1,116 @@
+body{
+  background-color: rgba(15, 15, 15, 0.836);
+  color: white;
+}
+.username{
+ color: #c9d2ff;
+border-bottom: 2px dotted #c9d2ff;
+}
+.timeline-image {
+  height: 180px;
+}
+
+.timeline-image img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  opacity: 0.5;
+}
+
+.profile-container {
+ background: rgb(47 47 47);
+  filter: drop-shadow(1px 1px 5px black);
+}
+
+.profile-image img {
+  width: 225px;
+  height: 225px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+  top: -60px;
+  left: 0;
+  right: 0;
+  padding: 62px 10px;
+  font-size: 16px;
+}
+
+.container-fluid {
+  position: relative;
+}
+
+.left-profile-block {
+  flex: 0.6;
+}
+
+.left-profile-block .profile-element {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+}
+
+.profile-element {
+  margin: 10px;
+}
+
+.left-profile-block .profile-element div {
+  width: 50%;
+}
+
+.big {
+  font-size: 24px;
+  font-weight: bolder;
+}
+
+.edit-block {
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  z-index: 10;
+}
+
+.fab {
+  padding: 8px;
+  width: 40px;
+  font-size: 22px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px;
+  border-radius: 3px;
+}
+
+.fab:hover {
+  opacity: 0.7;
+}
+
+.fa-facebook-f {
+  background: #3b5998;
+  color: white;
+}
+
+.fa-twitter {
+  background: #55acee;
+  color: white;
+}
+
+.fa-instagram {
+  background: #e1306c;
+  color: white;
+}
+
+.small-text {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.blog-heading{
+  border-bottom: 2px dotted grey;
+    display: inline-block;
+    padding-bottom: 11px;
+}

@@ -1,0 +1,61 @@
+{% extends 'admin/login.html' %}
+{% load i18n static %}
+
+{% block branding %}
+    <a href="{% url 'admin:index' %}" class="django-admin-logo">
+        <!-- Django Administration -->
+        <img height="60" src="{% static 'images/admin/logo.png' %}" alt="{{ site_header|default:_('Django administration') }}">
+    </a>
+{% endblock branding %}
+{% block extrastyle %}{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/login.css'%}">
+<style>
+  body.login{
+   background-image: linear-gradient(to left,#3498db,#8e44ad);
+}
+#header {
+   width: auto;
+   height: auto;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 10px 40px;
+    background-image: linear-gradient(to left,#3498db,#8e44ad);
+   color: #ffc;
+   overflow: hidden;
+}
+.login .submit-row {
+   clear: both;
+   padding: 1em 0 0 9.4em;
+   margin: 0;
+   border: none;
+   background: none;
+   text-align: left;
+   background-image: linear-gradient(120deg,#3498db,#8e44ad);
+}
+.button, input[type="submit"], input[type="button"], .submit-row input, a.button {
+   background: transparent;
+   padding: 10px 15px;
+   border: none;
+   border-radius: 4px;
+   color: #fff;
+   cursor: pointer;
+}
+#content-main{
+    background:transparent;
+    border:none;
+}
+#login-form legend{
+    padding:20px;
+}
+#login-form .form-row{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.username,.password{
+    margin:8px;
+}
+</style>
+{{ form.media }}
+{% endblock %}

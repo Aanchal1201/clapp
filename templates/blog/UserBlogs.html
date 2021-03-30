@@ -1,0 +1,211 @@
+{% extends 'home/base.html' %}
+{% block title %} Your Blogs {% endblock title %}
+{% block logBlogactive %}active{% endblock %}
+{% block css %} {% load static %}
+<link rel="stylesheet" href="{% static 'css/blogcards.css' %}" />
+<link rel="stylesheet" href="{% static 'css/blogHome.css' %}" />
+<style>
+  @import url("https://fonts.googleapis.com/css?family=Lilita+One");
+
+  .form-inline-block {
+    display: inline-block;
+    text-align: center;
+  }
+
+  .card-img-overlay {
+    bottom: 26%;
+  }
+
+  body {
+    background: rgb(231, 230, 230);
+    overflow-x: hidden;
+  }
+
+  .bubbles {
+    background-image: linear-gradient(#ff6633, #660066);
+    font-family: "Lilita One";
+    overflow: hidden;
+    font-size: 1em;
+    color: #fff3e0;
+    text-align: center;
+  }
+
+  .bubble {
+    position: absolute;
+    width: 10em;
+    height: 10em;
+    z-index: 100;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center,
+        rgba(255, 255, 255, 0.5) 0%,
+        rgba(255, 255, 255, 0) 70%);
+    box-shadow: inset 0 20px 30px rgba(255, 255, 255, 0.4),
+      inset 1em 1em 1em rgba(255, 255, 255, 0.6), 0 1em 2em rgba(0, 0, 0, 0.25);
+  }
+
+  .bubble:hover {
+    display: none;
+  }
+
+  .b1 {
+    animation: floatup 10s linear infinite,
+      sideways 5s ease-in-out infinite alternate;
+    left: 10%;
+    top: 100%;
+  }
+
+  .b2 {
+    animation: floatup 5s linear infinite,
+      sideways 4s ease-in-out 1s infinite alternate;
+    left: 15%;
+    top: 30%;
+    transform: scale(0.7);
+  }
+
+  .b3 {
+    animation: floatup 4s linear infinite,
+      sideways 6s ease-in-out 6s infinite alternate;
+    left: 20%;
+    transform: scale(1.2);
+  }
+
+  .b4 {
+    animation: floatup 6s linear infinite,
+      sideways 5s ease-in-out 3s infinite alternate;
+    left: 25%;
+    top: 90%;
+    transform: scale(0.5);
+  }
+
+  .b5 {
+    animation: floatup 8s linear infinite,
+      sideways 6s ease-in-out 3s infinite alternate;
+    left: 30%;
+    top: 30%;
+    transform: scale(1.1);
+  }
+
+  .b6 {
+    animation: floatup 7s linear infinite,
+      sideways 4s ease-in-out 3.5s infinite alternate;
+    left: 40%;
+    top: 50%;
+    transform: scale(0.7);
+  }
+
+  .b7 {
+    animation: floatup 6s linear infinite,
+      sideways 5s ease-in-out 4s infinite alternate;
+    left: 90%;
+    top: 90%;
+    transform: scale(0.6);
+  }
+
+  @keyframes floatup {
+    0% {
+      margin-top: 50%;
+    }
+
+    100% {
+      margin-top: -50%;
+    }
+  }
+
+  @keyframes sideways {
+    0% {
+      margin-left: 0em;
+    }
+
+    100% {
+      margin-left: 20em;
+    }
+  }
+</style>
+{% endblock css %}
+{% block body %}
+<div class="container-fluid blogMain">
+  <div class="bubbles">
+    <div class="bubble b1"></div>
+    <div class="bubble b2"></div>
+    <div class="bubble b3"></div>
+    <div class="bubble b4"></div>
+    <div class="bubble b5"></div>
+    <div class="bubble b6"></div>
+    <div class="bubble b7"></div>
+  </div>
+  <div class="my-4">
+    <h2 class="text-light">Write your own Technical Blog</h2>
+    <p class="text-light">Show your creativity and love</p>
+    <div>
+      <a href="/blog/addBlog/" role="button" class="btn btn-success btn-sm p-2">Add Blog <i
+          class="fas fa-plus-circle"></i></a>
+      <a href="/blog/viewAuthorProfile/" role="button" class="btn btn-primary btn-sm p-2">Show Profile <i
+          class="fas fa-user-circle"></i></a>
+    </div>
+    <div class="my-3">
+      <a href="#userBlog" role="button" class="btn btn-secondary btn-lg p-2">View Blogs <i
+          class="fas fa-sort-down"></i></a>
+    </div>
+  </div>
+</div>
+
+<div class="container my-3" id="userBlog">
+  <h2>Your Blogs</h2>
+  <hr />
+
+  <div class="row">
+    {% for post in allposts %}
+    <div class="card col-lg-3 col-md-5 col-sm-9 p-0 m-4">
+      <a href="/blog/{{post.slug}}" class="text-light">
+        <div class="img-container">
+          <img src="/media/{{post.image}}" class="card-img" alt="..." />
+        </div>
+        <div class="card-img-overlay">
+          <h5 class="card-title">{{post.title}}</h5>
+        </div>
+      </a>
+      <div class="card-footer text-center">
+        <small class="text-muted">{{post.dateUpdate.date}} . {{post.timeRead}} read</small>
+
+        <div class="d-flex justify-content-center my-2">
+          <form action="/blog/EditUserBlog/" method="POST" class="form-inline-block">
+            {% csrf_token %}
+            <input type="hidden" name="edit" value="{{post.slug}}" />
+            <button type="submit" title="Edit" class="btn btn-success btn-sm mx-1">
+              <i class="fas fa-edit"></i>
+            </button>
+          </form>
+          <form action="/blog/deleteUserBlog/" method="POST" class="form-inline-block">
+            {% csrf_token %}
+            <input type="hidden" name="del" value="{{post.slug}}" />
+            <button type="submit" title="Delete" class="btn btn-danger btn-sm mx-1">
+              <i class="fas fa-trash"></i>
+            </button>
+          </form>
+
+          <span class="btn btn-secondary btn-sm mx-1" title="User Status">
+            {% if post.userStatus == "publish" %}
+            <i class="fas fa-lock-open"></i>
+            {% else %}
+            <i class="fas fa-lock"></i>
+            {% endif %}
+          </span>
+          <span class="btn btn-info btn-sm mx-1" title="Approval By admin">
+            {% if post.adminStatus %} <i class="fas fa-thumbs-up"></i>
+            {% else%}<i class="fas fa-thumbs-down"></i>
+            {%endif %}</span>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div>
+      <p style="color: grey">
+        You don't have your any blogs yet! click on 'Add Blog' to add your blogs
+      </p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock body %}

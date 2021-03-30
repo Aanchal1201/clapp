@@ -1,0 +1,81 @@
+{% extends 'home/base.html' %}
+
+{% block title %} Quiz Feedback {% endblock title %}
+
+{% block css %}
+<style>
+    .icons{
+        height:75px
+    }
+    .fa-star{
+        font-size: 30px;
+        margin: 10px;
+        filter: drop-shadow(1px 1px 1px black);
+    }
+    .checked{
+        
+        color: orange;
+        transform: scale(1.2);
+    }
+    
+</style>
+{% endblock css %}
+
+{% block quizactive %}active {% endblock %}
+{% block logQuizactive %}active{% endblock %}
+{% block body %}
+
+<div class="container my-3 col-8">
+    <h3>SHARE YOUR FEEDBACK</h3>
+    <form action="/quiz/feedbackHandle" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="quizTitle" value="{{quizTitle}}">
+        {% if user.is_authenticated %}
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" disabled class="form-control" name="email" id="email" value="{{user.email}}">
+        </div>
+        {% else %}
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" name="email" id="email" required placeholder="name@example.com">
+        </div>
+        {% endif %}
+        
+        <div class="form-label">
+            <label for="star">How Satisfied are you with our Quiz?</label>
+            <input type="hidden" id="star" name="star" value="0" required>
+            <div class="icons">
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="review">Share Your Experience with us...</label>
+            <textarea class="form-control" name="review" id="review" rows="5"  placeholder="What do you like the most/ having any query"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary mb-2">Send Feedback</button>
+    </form>
+</div>
+<script>
+    let stars = document.querySelectorAll(".fa-star"); 
+    let starValue = document.getElementById("star")
+    stars.forEach((star,index)=>{
+        star.addEventListener("click",function(e){
+            removeChecked();
+            for (let i = 0; i <= index ; i++) {
+                stars[i].classList.add("checked");
+            }
+            starValue.value = document.querySelectorAll(".checked").length;
+        })
+    })
+    function removeChecked(){
+        stars.forEach(star=>{
+            star.classList.remove("checked")
+        })
+    }
+</script>
+{% endblock body %}

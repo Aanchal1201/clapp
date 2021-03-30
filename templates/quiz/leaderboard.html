@@ -1,0 +1,44 @@
+{% extends 'home/base.html' %}
+
+{% block title %} LeaderBoard {% endblock title %}
+
+{% block css %}
+<style>
+</style>
+{% endblock css %}
+
+{% block logQuizactive %}active{% endblock %}
+{% block body %}
+
+<div class="container">
+    <div class="text-center">
+        <h2 class="text-center m-4 bg-dark text-light d-inline-block p-2 rounded">Top 50 Players</h2>
+    </div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Position</th>
+      <th scope="col">Username</th>
+      <th scope="col">Score</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for score in result %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{score.user}}</td>
+      <td class="score">{{score.current_score}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+
+<script>
+    let scores = document.querySelectorAll(".score")
+    scores.forEach(score=>{
+        score.innerHTML = Number(score.innerHTML).toFixed(2)
+    })
+</script>
+
+{% endblock body %}

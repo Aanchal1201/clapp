@@ -1,0 +1,66 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block title %} Login {% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/loginpage.css' %}">
+<style>
+
+</style>
+{% endblock css %}
+
+{% block body %}
+
+<section>
+  
+  <div class="box">
+    
+    <div class="square" style="--i:0;"></div>
+    <div class="square" style="--i:1;"></div>
+    <div class="square" style="--i:2;"></div>
+    <div class="square" style="--i:3;"></div>
+    <div class="square" style="--i:4;"></div>
+    <div class="square" style="--i:5;"></div>
+    
+   <div class="lcontainer"> 
+   
+   <div class="loader"></div>
+
+    <div class="form"> 
+      <h2 class="text-center">LOGIN</h2>
+      <div id="message" class="text-danger text-center"></div>
+      <form method="post" id="login">
+        {% csrf_token %}
+        <div class="inputBx">
+          <input type="text" id="username" name="username" required>
+          <span>Username/Email</span>
+          <img src="https://www.flaticon.com/svg/static/icons/svg/709/709699.svg" alt="user">
+          <p><small class="text-danger d-none usernotExist">username/email is not registered! Please try to Register first</small></p>
+        </div>
+        <div class="inputBx password">
+          <input id="password-input" type="password" name="password" required autocomplete="off">
+          <span>Password</span>
+          <a name="pass" class="password-control" onclick="return show_hide_password(this);"></a>
+          <img src="https://www.flaticon.com/svg/static/icons/svg/1828/1828471.svg" alt="lock">
+          <p><small class="text-danger d-none incorrectPass">Your Password is incorrect! Please try again</small></p>
+        </div>
+        <label class="remember"><input type="checkbox">
+          Remember Me</label>
+        <div class="inputBx">
+          <input type="submit" value="Log in"> 
+        </div>
+      </form>
+      <p>Forgot password? <a href="{% url 'password_reset' %}">Click Here</a></p>
+      <p>Don't have an account <a href="/account/signup">Sign up</a></p>
+    </div>
+  </div>
+    
+  </div>
+</section>
+
+
+{% endblock body %}
+{% block script %}
+<script src="{% static 'js/showHidePassword.js' %}"></script>
+<script src="{% static 'js/loginPage.js' %}"></script>
+{% endblock script %}

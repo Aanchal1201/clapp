@@ -1,0 +1,28 @@
+{% extends 'home/base.html' %} 
+{% load static %}
+{% block title %} Search Results for {{query}} {% endblock title %}
+{% block logBlogactive %}active{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/blogcards.css' %}">
+<style>
+     body{
+         background-color: rgba(15, 15, 15, 0.836);
+        color: white;
+    }
+</style>
+{% endblock css %} 
+{% block body %} 
+
+<div class="container my-4">
+<h3 class="my-2 text-center">Search Result for <b>"{{query}}"</b> </h3>
+
+{% if allposts|length < 1 %}
+    <p>Your search <strong style="font-size:25px">"{{query}}"</strong> didn't match with our any blogs</p>
+    <p>Note: <strong> Try Different Keywords</strong></p>
+{% endif %}
+
+    <div class="row justify-content-center">
+   {% include 'blog/blogTemplate.html' %}
+</div>
+</div>
+{% endblock body %}

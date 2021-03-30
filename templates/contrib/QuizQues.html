@@ -1,0 +1,200 @@
+{% extends "contrib/ContribBase.html" %}
+{% load static %}
+{% block css %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+  crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'css/contribQuizQues.css' %}">
+
+  <style>
+ .card{
+    background-color: rgba(0,0,0,0.25);
+}
+.list-group-item{
+  background:#34343a;
+}
+  </style>
+{% endblock css %}
+{% block quizCon %}active{% endblock quizCon %}
+
+{% block main %}
+<main id="main">
+  <div id="blackout-on-hover"></div>
+  <div class="container p-2">
+  <nav aria-label="breadcrumb">
+  <ol class="breadcrumb m-3">
+    <li class="breadcrumb-item"><a href="/contribution">Contribution</a></li>
+    <li class="breadcrumb-item"><a href="/contribution/quiz">Quiz</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{lang}} Quiz</li>
+  </ol>
+</nav>
+    {% comment %} <span><a href="/contribution/quiz"><i class="fas fa-arrow-circle-left"></i> Back to Quiz</a></span> {% endcomment %}
+    <h1>Your {{lang}} Questions</h1>
+    <hr>
+    <!-- all questions here -->
+    <div class="row quesContainer">
+    {% for ques in allQues %}
+        <div class="col-lg-4 col-md-6 col-sm-10 p-0">
+        <div class="m-2 card">
+
+         <div class="card__side card__side--front">
+        <div class="card-header bg-dark text-light">{{forloop.counter}}) {{ques.Ques}}</div>
+         <ul class="list-group list-group-flush">
+        <li class="list-group-item">{{ques.choice1}}</li>
+        <li class="list-group-item">{{ques.choice2}}</li>
+        <li class="list-group-item">{{ques.choice3}}</li>
+        <li class="list-group-item">{{ques.choice4}}</li>
+        </ul>
+         <div class="card-footer text-muted">Answer: {{ques.Ans}}</div>
+         </div>
+
+        <div class="card__side card__side--back d-flex justify-content-center align-items-center">
+        <button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#deleteQues{{ques.id}}">Delete</button>     
+        <!-- Button trigger modal -->
+    <button type="button" class="btn btn-success m-2" data-bs-toggle="modal" data-bs-target="#EditQues{{ques.id}}">Edit</button>
+        
+        </div>
+        </div>
+        </div>
+
+    <!-- Modal -->
+<div class="modal fade" id="deleteQues{{ques.id}}" tabindex="-1" aria-labelledby="addLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="post" action="{{lang}}/deleteQues/{{ques.id}}">
+        {% csrf_token %}
+      <div class="modal-header">
+        <h5 class="modal-title" id="addLabel">{{ques.Ques}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this question?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-danger">Delete</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="EditQues{{ques.id}}" tabindex="-1" aria-labelledby="addLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="post" action="{{lang}}/EditQues/{{ques.id}}">
+        {% csrf_token %}
+      <div class="modal-header">
+        <h5 class="modal-title" id="addLabel">{{lang}} Question {{forloop.counter}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Ques</span>
+     <input type="text" class="form-control" value="{{ques.Ques}}" name="ques" placeholder="Question" aria-label="Username" aria-describedby="basic-addon1" required>
+        </div>
+        <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">1</span>
+     <input type="text" class="form-control" name="choice1" value="{{ques.choice1}}" placeholder="Choice1" aria-label="Username" aria-describedby="basic-addon1" required>
+        </div>
+        <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">2</span>
+     <input type="text" class="form-control" name="choice2" value="{{ques.choice2}}" placeholder="Choice2" aria-label="Username" aria-describedby="basic-addon1" required>
+        </div>
+        <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">3</span>
+     <input type="text" class="form-control" name="choice3" value="{{ques.choice3}}" placeholder="Choice3" aria-label="Username" aria-describedby="basic-addon1" required>
+        </div>
+        <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">4</span>
+     <input type="text" class="form-control" name="choice4" value="{{ques.choice4}}" placeholder="Choice4" aria-label="Username" aria-describedby="basic-addon1" required>
+        </div>
+        <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Ans</span>
+     <input type="text" class="form-control" name="ans" value="{{ques.Ans}}" placeholder="Answer" aria-label="Username" aria-describedby="basic-addon1" required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Update</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+    {% empty %}
+    <h5>You don't have any questions yet! click on Add Question to add some questions</h5>
+    {% endfor %}
+    </div>
+
+
+    <hr>
+
+        <!-- Button trigger modal -->
+<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addLanguage">
+  Click to Add Question
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="addLanguage" tabindex="-1" aria-labelledby="addLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="post" action="{{lang}}/addQues">
+        {% csrf_token %}
+      <div class="modal-header">
+        <h5 class="modal-title" id="addLabel">{{lang}} Question {{allQues|length|add:1}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Ques</span>
+     <input type="text" class="form-control" name="ques" placeholder="Question" aria-label="Username" aria-describedby="basic-addon1" required>
+        </div>
+        <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">1</span>
+     <input type="text" class="form-control" name="choice1" placeholder="Choice1" aria-label="Username" aria-describedby="basic-addon1" required>
+        </div>
+        <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">2</span>
+     <input type="text" class="form-control" name="choice2" placeholder="Choice2" aria-label="Username" aria-describedby="basic-addon1" required>
+        </div>
+        <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">3</span>
+     <input type="text" class="form-control" name="choice3" placeholder="Choice3" aria-label="Username" aria-describedby="basic-addon1" required>
+        </div>
+        <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">4</span>
+     <input type="text" class="form-control" name="choice4" placeholder="Choice4" aria-label="Username" aria-describedby="basic-addon1" required>
+        </div>
+        <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Ans</span>
+     <input type="text" class="form-control" name="ans" placeholder="Answer" aria-label="Username" aria-describedby="basic-addon1" required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Add</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+</div>
+    
+</main>
+
+<!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
+    -->
+
+
+{% endblock main %} 

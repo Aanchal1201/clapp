@@ -1,0 +1,142 @@
+{% extends 'home/base.html' %}
+
+{% block title %} View User Profile {% endblock title %}
+
+{% block css %}
+<style>
+   
+</style>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock css %}
+
+{% block body %}
+<div class="container-fluid p-0">
+    <div class="timeline-image">
+        <img src="/media/{{myprofile.coverImage}}" alt="timeline">
+    </div>
+   
+    <div class="container profile-container">
+     <div class="edit-block">
+        <span><a href="/editUserProfile/" role="button" class="btn btn-success m-2">Edit <i class="fas fa-edit"></i></a></span>
+    </div>
+        <div class="left-profile-block">
+        <div class="profile-element">
+            <div class="small-text">Full name </div>
+            <div class="big">
+                <span>{{myuser.first_name}}</span>
+                <span>{{myuser.last_name}}</span>
+            </div>
+        </div>
+        <div class="profile-element">
+            <div class="small-text">Username </div>
+            <div>
+                <span>{{myuser.username}}</span>
+            </div>
+        </div>
+        <div class="profile-element">
+            <div class="small-text">Email Id </div>
+            <div>
+                <span>{{myuser.email}}</span>
+            </div>
+        </div>
+        <div class="profile-element">
+            <div class="small-text">Phone Number</div>
+            <div>
+                <span>{{myprofile.phoneNumber}}</span>
+            </div>
+        </div>
+        <div class="profile-element">
+            <div class="small-text ">Gender</div>
+            <div class="text-capitalize">
+                <span>{{myprofile.Gender | lower}}</span>
+            </div>
+        </div>
+        <div class="profile-element">
+            <div class="small-text">DOB</div>
+            <div>
+                <span>{{myprofile.Dob}}</span>
+            </div>
+        </div>
+        <div class="profile-element">
+            <div class="small-text">Joining </div>
+            <div> 
+                <span id="joining">{{myprofile.JoiningDate.isoformat}}</span>
+            </div>
+        </div>
+        <div class="profile-element">
+            <div class="small-text">Language Known </div>
+            <div>
+                <span>{{myprofile.language}}</span>
+            </div>
+        </div>
+        <div class="profile-element">
+            <div class="small-text">Country, State, District</div>
+            <div>
+                <span>{{myprofile.Country}}</span>,
+                <span>{{ myprofile.State}}</span>,
+                <span>{{myprofile.District}}</span>
+            </div>
+        </div>
+        <div class="profile-element">
+            <div class="small-text">Address</div>
+            <div>
+                <span>{{myprofile.address}}</span></div>
+        </div>
+        <div class="profile-element">
+            <div class="small-text">City, Pincode </div>
+            <div>
+                <span>{{myprofile.city}}</span>,
+                <span>{{myprofile.pincode}}</span>
+            </div>
+        </div>
+        <div class="profile-element">
+            <div class="small-text">Bio </div>
+            <div> 
+                "<span>{{myprofile.Bio}}</span>"
+            </div>
+        </div>
+      <div class="profile-element">
+            <div class="small-text">Security Question </div>
+            <div> 
+                <span>{{myprofile.securityQues}}</span>
+            </div>
+        </div>
+        <div class="profile-element">
+            <div class="small-text">Security Answer </div>
+            <div>
+                <span>{{myprofile.securityAns}}</span>
+            </div>
+        </div> 
+        
+        </div>
+        <div class="right-profile-block">
+            <div class="profile-element">
+                <div class="profile-image">
+                    <img src="/media/{{myprofile.profileImage}}" alt="User Profile picture">
+                </div>
+            </div>
+            <div class="profile-element text-center">
+                <strong><span>{{myprofile.designation}}</span></strong>
+            </div>
+            <div class="profile-element text-center">
+                <div class="social-links">
+                    <a href="{{myprofile.facebook_url}}" target="_blank" ><i class="fab fa-facebook-f"></i></a>
+                    <a href="{{myprofile.instagram_url}}" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="{{myprofile.twitter_url}}" target="_blank"><i class="fab fa-twitter"></i></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let spans = document.querySelectorAll(".profile-element span")
+    spans.forEach(span=>{
+        if (span.innerHTML == "None"){
+            span.innerHTML = ""
+        }
+    })
+</script>
+<script src="{% static 'js/JoiningDate.js' %}"></script>
+{% endblock body %}

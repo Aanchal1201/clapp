@@ -1,0 +1,188 @@
+{% extends "contrib/ContribBase.html" %}
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/assets/owl.carousel.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/assets/owl.theme.default.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.40/css/uikit.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.40/js/uikit.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.40/js/uikit-icons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+<link rel="stylesheet" href="{% static 'css/blogcards.css' %}">
+<style>
+  .uk-section {
+    background-color: transparent;
+  }
+
+  .owl-carousel {
+    position: relative;
+    margin-top: 30px;
+  }
+
+  {% comment %} .owl-nav {
+    position: absolute;
+        top: -9%;
+    left: 43%;
+  } {% endcomment %}
+  .owl-prev, .owl-next{
+    position: absolute;
+    top: 32%;
+  }
+  .owl-prev{
+    left:-5%;
+  }
+  .owl-next{
+    right: -5%;
+  }
+  .owl-prev .uk-margin-small-right, .owl-next .uk-margin-small-right{
+    margin:0 !important;
+  }
+  .owl-prev svg, .owl-next svg{
+    width:50px;
+    height:50px;
+  }
+
+  .uk-card-primary {
+    border-radius: 8px;
+  }
+
+  .uk-card> :last-child {
+    margin-top: 0;
+    margin-bottom: 10px
+  }
+
+
+  .owl-next {
+    background: #3286f0;
+  }
+
+  .owl-theme .owl-nav [class*='owl-'] {
+    background: transparent;
+    color:#808080;
+  
+  }
+  .owl-theme .owl-nav [class*='owl-']:hover{
+    background: transparent;
+    color:#383838;
+  }
+  .owl-dots {
+    margin-top: 30px;
+  }
+
+  .uk-card-title {
+    padding-bottom: 20px
+  }
+.card-img-overlay {
+    bottom: 25%;
+}
+#main h2{
+      font-size: 50px;
+    margin: 5px;
+    padding: 10px;
+    border-bottom: 3px solid #0FA0EB;
+    display: inline-block;
+}
+h1{
+  color:white;
+}
+</style>
+{% endblock css %}
+{% block blogCon %}active{% endblock blogCon %}
+{% block main %}
+<main id="main">
+
+  <div id="blackout-on-hover"></div>
+ 
+  <div class="text-center m-2 mb-5">
+  
+
+  <h2>Your Blogs</h2>
+   <a href="/blog/addBlog/" role="button" class="btn btn-lg btn-success p-2 mx-3">Add Blog <i class="fas fa-plus-circle mx-2"></i></a>
+  </div>
+
+  <div class="container">
+  
+    <div class="uk-margin"></div>
+      <div class="owl-carousel owl-theme">
+
+          {% for post in allposts %}
+  <div class="card p-0 m-4">
+  <a href="/blog/{{post.slug}}" class="text-light">
+    <div class="img-container">
+      <img src="/media/{{post.image}}" class="card-img" alt="...">
+    </div>
+    <div class="card-img-overlay">
+        <h5 class="card-title">{{post.title}}</h5>
+    </div>
+      </a>
+    <div class="card-footer text-center">
+      <small class="text-muted">({{post.timeRead}} read) {{post.dateUpdate.date}} by
+        <a href="/blog/viewAuthorProfile/{{post.authorUsername.username}}"> {{post.authorUsername}}</a>
+        </small>
+        <div class="d-flex justify-content-center my-2">
+          <form action="/blog/EditUserBlog/" method="POST" class="form-inline-block">
+            {% csrf_token %}
+            <input type="hidden" name="edit" value="{{post.slug}}" />
+            <button type="submit" title="Edit" class="btn btn-success btn-sm mx-1">
+              <i class="fas fa-edit"></i>
+            </button>
+          </form>
+          <form action="/blog/deleteUserBlog/" method="POST" class="form-inline-block">
+            {% csrf_token %}
+            <input type="hidden" name="del" value="{{post.slug}}" />
+            <button type="submit" title="Delete" class="btn btn-danger btn-sm mx-1">
+              <i class="fas fa-trash"></i>
+            </button>
+          </form>
+
+          <span class="btn btn-secondary btn-sm mx-1" title="User Status">
+            {% if post.userStatus == "publish" %}
+            <i class="fas fa-lock-open"></i>
+            {% else %}
+            <i class="fas fa-lock"></i>
+            {% endif %}
+          </span>
+          <span class="btn btn-info btn-sm mx-1" title="Approval By admin">
+            {% if post.adminStatus %} <i class="fas fa-thumbs-up"></i>
+            {% else%}<i class="fas fa-thumbs-down"></i>
+            {%endif %}</span>
+        </div>
+    </div>
+  </div>
+  {% endfor %}
+      </div>
+  </div>
+
+  
+
+</main>
+
+<script>
+  $('.owl-carousel').owlCarousel({
+    loop: false,
+    rewind: true,
+    autoplay: true,
+    stagePadding: 15,
+    margin: 10,
+    responsiveClass: true,
+    autoHeight: true,
+    autoplayTimeout: 3000,
+    smartSpeed: 800,
+    nav: true,
+    navText: ['<span class="uk-margin-small-right uk-icon" uk-icon="icon: chevron-left"></span>', '<span class="uk-margin-small-left uk-icon" uk-icon="icon: chevron-right"></span>'],
+    responsive: {
+      0: {
+        items: 1
+      },
+      640: {
+        items: 2
+      },
+      960: {
+        items: 3
+      }
+    }
+  })
+</script>
+{% endblock main %}

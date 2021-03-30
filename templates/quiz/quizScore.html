@@ -1,0 +1,184 @@
+{% extends 'home/base.html' %}
+
+{% block title %} Quiz Answers {% endblock title %}
+
+{% block css %}
+<style>
+    .custom-position {
+        position: absolute;
+        font-size: 18px;
+        left: -18px;
+        top: 0;
+    }
+    .form-check{
+        padding-left: 2rem;
+    }
+    *{
+        user-select: none;
+    }
+</style>
+{% endblock css %}
+
+{% block quizactive %}active {% endblock %}
+{% block logQuizactive %}active{% endblock %}
+{% block body %}
+
+<div class="container my-3" style="max-width: 600px;">
+
+    {% if isNotUser %}
+    <p style="min-height:90vh">Either You are not <b> login! </b>or you are trying to look something false!! Please try
+        your own result!!
+
+    <button onclick="window.history.back()" class="btn btn-secondary m-2 ">Back</button>
+    </p>
+    {% else %}
+
+    <div>
+        <h3 class=" d-inline-block p-2">{{userscore.quizTitle}}</h3>
+        <div id="quiz">
+
+        </div>
+        {% comment %} <p class="text-capitalize font-weight-bold mt-4 mb-1">{{ques}}</p> {% endcomment %}
+    </div>
+
+
+    <div><strong>Your score is {{userscore.user_score}}/{{userscore.total_score}}</strong></div>
+    <button onclick="window.history.back()" class="btn btn-secondary m-2 ">Back</button>
+    
+    {% comment %} <textarea name="" id="content" cols="1" rows="1">{{userscore.quiz_data}}</textarea> {% endcomment %}
+    <p id="textRemove">{{userscore.quiz_data|json_script:"json_data"|safe|escape}}</p>
+    
+</div>
+
+<script>
+   //let json_raw = document.getElementById("content").innerHTML;
+    //document.getElementById("content").remove()
+    //let json = JSON.parse(json_raw)
+    let quiz = document.getElementById("quiz");
+    const json_data = JSON.parse(document.getElementById('json_data').textContent);
+    document.getElementById('textRemove').remove()
+    let json = JSON.parse(json_data)
+    let html = '';
+    json.forEach((item, index) => {
+        html += `
+         <div class="card border-secondary my-4 question-section">
+         <div class="card-header font-weight-bold border-secondary text-light bg-dark">Question ${index + 1} of ${json.length}</div>
+        <div>
+         <div class="card-body text-dark" style="padding: 1.25rem 2rem;">
+          <h5 class="card-title">${item.Ques}</h5>
+            <input type="hidden" value="${item.userAns}" class="userAns">
+            <input type="hidden" value="${item.Ans}" class="Ans">
+            <p class="card-text">
+
+            <div class="form-check">
+            <input class="form-check-input quiz${index + 1}" type="radio" disabled value="${item.choice1}">
+            <label class="form-check-label">
+                ${item.choice1}
+            </label>
+            </div>
+
+            <div class="form-check">
+            <input class="form-check-input quiz${index + 1}" type="radio" disabled value="${item.choice2}">
+            <label class="form-check-label">
+                ${item.choice2}
+            </label>
+            </div>
+
+            <div class="form-check">
+            <input class="form-check-input quiz${index + 1}" type="radio" disabled value="${item.choice3}">
+            <label class="form-check-label">
+                ${item.choice3}
+            </label>
+            </div>
+            
+            <div class="form-check">
+            <input class="form-check-input quiz${index + 1}" type="radio" disabled value="${item.choice4}">
+            <label class="form-check-label">
+                ${item.choice4}
+            </label>
+            </div>
+            <div class="msg font-weight-bold"></div>
+            </p>
+            <div class="buttons d-flex justify-content-between">
+            
+            <button type="button" class="btn btn-secondary btn-prev">Prev</button>
+            <button type="button" class="btn btn-primary btn-next">Next</button>
+            </div>
+            </div>
+            </div>
+        </div>`;
+
+    });
+
+    quiz.innerHTML = html
+    let msgs = document.querySelectorAll(".msg")
+    let userAns = document.querySelectorAll(".userAns")
+    let Ans = document.querySelectorAll(".Ans")
+    json.forEach((item, index) => {
+        var valid_choices = document.querySelectorAll(`.quiz${index + 1}`);
+        valid_choices.forEach(element => {
+            if (element.value == userAns[index].value) {
+                element.setAttribute("checked", "");
+                if (item.is_correct == "false") {
+                    element.nextElementSibling.style.color = "red";
+                    createSpan("red", `<i class="fas fa-times"></i>`, element)
+                    msgs[index].innerHTML = `<p class="text-danger">Your answer is Incorrect</p>`;
+                }
+            }
+            if (element.value == Ans[index].value) {
+                element.nextElementSibling.style.color = "green";
+                createSpan("green", `<i class="fa fa-check"></i>`, element)
+                if(item.is_correct == "true"){
+                    msgs[index].innerHTML = `<p class="text-success">Your answer is Correct</p>`;
+                }
+            }
+            if (item.is_correct == "unanswered") {
+                    msgs[index].innerHTML = `<p class="text-warning">You not attempt this question!</p>`;
+                }
+        })
+
+        function createSpan(color, text, element) {
+            let span = document.createElement("span")
+            span.setAttribute("class", "custom-position")
+            span.innerHTML = text;
+            span.style.color = color;
+            element.parentElement.prepend(span)
+        }
+    })
+
+    let questionSection = document.querySelectorAll(".question-section");
+    function hide() {
+
+        questionSection.forEach(element => {
+            element.style.display = "None"
+        })
+    }
+    hide();
+    questionSection[0].style.display = "";
+
+    let prevBtns = document.querySelectorAll(".btn-prev");
+    let nextBtns = document.querySelectorAll(".btn-next");
+    prevBtns.forEach((prev,index) => {
+        if (index == 0){
+                prevBtns[index].style.display = "None";
+                return
+            }
+        prev.addEventListener("click", function () {
+           
+            hide();
+            questionSection[index-1].style.display ="";
+        })
+    })
+    nextBtns.forEach((next,index) => {
+        if(index == nextBtns.length-1){
+            nextBtns[index].style.display = "None";
+                return
+            }
+        next.addEventListener("click", function () {
+            hide();
+            questionSection[index+1].style.display ="";
+        })
+    })
+</script>
+{% endif %}
+{% endblock body %}

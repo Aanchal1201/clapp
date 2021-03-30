@@ -1,0 +1,59 @@
+{% extends 'home/base.html' %}
+{% block title %} Add Blogs {% endblock title %}
+{% block logBlogactive %}active{% endblock %}
+{% block css %}
+
+<script src="//cdn.ckeditor.com/4.5.5/standard/ckeditor.js"></script>
+{% load static %}
+{% comment %} <script src="https://cdn.tiny.cloud/1/xvlm5smgs5idicigzvgwfxcebx56o9267zto57s14bv7k213/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="{% static 'js/tinymce.js' %}"></script> {% endcomment %}
+
+<style>
+
+</style>
+{% endblock css %} 
+{% block body %}
+<div class="container my-4">
+    <h3>Add Blog Details</h3>
+    <form action="/blog/addingBlog/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="title" class="form-label">Title<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="title" name="title" required />
+        </div>
+        {% comment %} <div class="mb-3">
+            <label for="Label" class="form-label">Label<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="Label" name="Label" required />
+        </div> {% endcomment %}
+        <div class="mb-3">
+            <label for="category" class="form-label">Category<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="category" name="category" required />
+        </div>
+        <div class="mb-3">
+            <label for="timeRead" class="form-label">Time to read<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="timeRead" name="timeRead" required placeholder="example: 30s/2min" />
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Image<span class="text-danger">*</span></label>
+            <input type="file" class="form-control" id="image" name="image" required />
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label">Content<span class="text-danger">*</span></label>
+            <textarea name="content" id="content" class="form-control" rows="10"></textarea>
+        </div>
+        <div class="mb-3">
+        <label for="status" class="form-label">Status<span class="text-danger">*</span></label>
+          <select name="status" id="status" class="form-control" > 
+            <option value="draft">Draft</option>
+            <option value="publish">Publish</option>
+            
+          </select>
+        </div>
+        <button type="submit" class="btn btn-success btn-block">Submit</button>
+        
+    </form>
+</div>
+<script>
+  CKEDITOR.replace('content');
+</script>
+{% endblock body %}

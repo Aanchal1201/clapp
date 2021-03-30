@@ -1,0 +1,163 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block title %} All Blogs {% endblock title %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/blogcards.css' %}">
+<link rel="stylesheet" href="{% static 'css/blogHome.css' %}">
+
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Lilita+One');
+
+body{
+    background:rgb(231, 230, 230);
+    overflow-x:hidden;
+} 
+
+.bubbles{
+  background-image: linear-gradient(#ff6633,#660066);
+  font-family: 'Lilita One';
+  overflow: hidden;
+  font-size: 1em;
+  color:#FFF3E0;
+  text-align:center;
+}
+.bubble{
+  position:absolute;
+  width:10em;
+  height:10em;
+  z-index:100;
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:50%;
+  background: radial-gradient(ellipse at center,  rgba(255,255,255,0.5) 0%,rgba(255,255,255,0) 70%);
+  box-shadow: inset 0 20px 30px rgba(255, 255, 255, 0.4), inset 1em 1em 1em rgba(255, 255, 255, 0.6), 0 1em 2em rgba(0, 0, 0, 0.25);
+}
+.bubble:hover{
+  display:none;
+}
+
+.b1{
+  animation: floatup 10s linear infinite, sideways 5s ease-in-out infinite alternate;
+  left: 10%;
+  top:100%; 
+}
+.b2{
+  animation: floatup 5s linear infinite, sideways 4s ease-in-out 1s infinite alternate;
+  left: 15%;
+  top: 30%;
+  transform: scale(.7);
+}
+.b3{
+  animation: floatup 4s linear infinite, sideways 6s ease-in-out 6s infinite alternate;
+  left: 20%;
+  transform: scale(1.2);
+}
+.b4{
+  animation: floatup 6s linear infinite, sideways 5s ease-in-out 3s infinite alternate;
+  left: 25%;
+  top:90%;
+  transform: scale(.5);
+}
+.b5{
+  animation: floatup 8s linear infinite, sideways 6s ease-in-out 3s infinite alternate;
+  left: 30%;
+  top:30%;
+  transform: scale(1.1);
+}
+.b6{
+  animation: floatup 7s linear infinite, sideways 4s ease-in-out 3.5s infinite alternate;
+  left:40%;
+  top:50%;
+  transform: scale(.7);
+}
+.b7{
+  animation: floatup 6s linear infinite, sideways 5s ease-in-out 4s infinite alternate;
+  left: 90%;
+  top:90%;
+  transform: scale(.6);
+}
+@keyframes floatup{
+  0% {margin-top: 50%;}
+  100% {margin-top: -50%;}
+}
+@keyframes sideways{
+  0% {margin-left: 0em;}
+  100%{margin-left: 20em;}
+}
+</style>
+{% endblock css %}
+
+{% block logBlogactive %}active{% endblock %}
+
+{% block body %}
+
+
+<div class="container-fluid blogMain">
+<div class="bubbles">
+<div class="bubble b1"></div>
+<div class="bubble b2"></div>
+<div class="bubble b3"></div>
+<div class="bubble b4"></div>
+<div class="bubble b5"></div>
+<div class="bubble b6"></div>
+<div class="bubble b7"></div>
+</div>
+    <form class="form-inline my-2 my-lg-0" method="get" action="/blog/search/">
+        <input class="form-control m-2" type="search" placeholder="Search" aria-label="Search" name="query"
+            id="query" />
+        <button class="btn btn-success my-2" type="submit"><i class="fa fa-search"
+                aria-hidden="true"></i></button>
+    </form>
+    <div class="my-4">
+        <h2 class="text-light">Read Our Latest Technical Blogs</h2>
+        <p class="text-light">Hope you loved our blogs</p>
+        <a href="#blogs" role="button" class="btn btn-success p-2">Get Started <i class="fas fa-sort-down"></i></a>
+    </div>
+</div>
+<div class="container my-4" id="blogs">
+    <div class="row justify-content-center">
+   {% include 'blog/blogTemplate.html' %}
+</div>
+
+
+{% if allposts.paginator.num_pages > 1 %}
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+    
+        {% if allposts.paginator.num_pages != 1 %}
+            <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+        {% else %}
+            <li class="page-item disabled"><a class="page-link" href="#">First</a></li>
+        {% endif %}
+
+        {% if allposts.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ allposts.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+            <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
+        {% endif %}
+
+        {% for i in allposts.paginator.page_range %}
+            {% if allposts.number == i %}
+                <li class="page-item active"><a class="page-link" href="#">{{ i }} <span class="sr-only">(current)</span></a></li>
+            {% elif allposts.number > i|add:"-5" and allposts.number < i|add:"+5"%}
+                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %}
+        {% endfor %}
+
+        {% if allposts.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ allposts.next_page_number }}">&raquo;</a></li>
+        {% else %}
+            <li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
+        {% endif %}
+
+        {% if allposts.paginator.num_pages != page.number %}
+            <li class="page-item"><a class="page-link" href="?page={{ allposts.paginator.num_pages }}">Last</a></li>
+        {% else %}
+            <li class="page-item disabled"><a class="page-link" href="#">Last</a></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+
+</div>
+
+{% endblock body %}

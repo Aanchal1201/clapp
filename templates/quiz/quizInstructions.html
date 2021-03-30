@@ -1,0 +1,51 @@
+{% extends 'home/base.html' %}
+
+{% block title %} Quiz {% endblock title %}
+
+{% block css %}
+<style>
+
+</style>
+{% endblock css %}
+
+{% block quizactive %}active {% endblock %}
+{% block logQuizactive %}active{% endblock %}
+{% block body %}
+
+<div class="container my-4 col-lg-7 col-md-9 col-sm-12">
+    
+    {% if blank %}
+        <div>
+            <h5>This quiz not contains any question Yet! Please Try with another one !!  </h5>
+            <div class="text-center">
+            <a href="/quiz" role="button" class="btn btn-primary m-2">Play Quiz</a>
+            </div>
+           
+        </div>
+    {% else %}
+    <h3 class="text-center">Some general Instructions for <strong>"{{title}}"</strong> </h3>
+    <hr>
+    <div class="instructions">
+        <ul>
+            <li>The quiz contains <strong> {{count}} </strong> questions.</li>
+            <li>The time for quiz is <strong> {{time}} mins</strong>, Quiz got <span style="border-bottom: 1px dotted grey;"> automatically submit </span> after completion of time</li>
+            <li>All questions are multiple choice questions having one answer true</li>
+            <li>You cannot switch tab in between the quiz!</li>
+            <li>There is only one warning while switching tab if still you trying, then your quiz got automatically submit...</li>
+            <li>If you are not <strong>login</strong>, then you can <strong> not view your previous score and answers of your quiz</strong></li>
+            <li>So make sure you login with your credentials...</li>
+        </ul>
+    </div>
+    <div class="d-flex justify-content-between">
+        {% if not user.is_authenticated %}
+        <a href="/account/login" role="button" class="btn btn-secondary m-2">Login</a>
+        {% endif %}
+        <form action="/quiz/quizStart/{{title}}" method="post">
+        {% csrf_token %}
+            <button type="submit" class="btn btn-success m-2" >Proceed Quiz</button>
+        </form>
+    </div>
+      {% endif %}
+</div>
+
+{% endblock body %}

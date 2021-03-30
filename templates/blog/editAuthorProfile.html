@@ -1,0 +1,130 @@
+{% extends 'home/base.html' %}
+
+{% block title %} Edit Author Profile{% endblock title %}
+{% block logBlogactive %}active{% endblock %}
+{% block css %}
+<style>
+
+</style>
+{% endblock css %}
+
+{% block body %}
+<div class="container my-4">
+    <h3>Edit Profile</h3>
+    <form action="/blog/handleEditAuthorProfile/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+       
+        <div class="mb-3">
+            <label for="fname" class="form-label">First Name<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="fname" name="fname" value="{{myuser.first_name}}" required/>
+        </div>
+        <div class="mb-3">
+            <label for="lname" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="lname" name="lname" value="{{myuser.last_name}}"/>
+        </div>
+
+        <div class="mb-3">
+        <label for="gender" class="form-label">Gender</label>
+          <select name="gender" id="gender" class="form-control"> 
+            <option value="MALE">Male</option>
+            <option value="FEMALE">Female</option>
+            <option value="OTHERS">Others</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="dob" class="form-label">Date of Birth</label>
+            <input type="date" class="form-control" id="dob" name="dob"/>
+        </div>
+        <div class="mb-3">
+            <label for="language" class="form-label">Known Language</label>
+            <input type="text" class="form-control" id="language" name="language" value="{{myprofile.language}}" />
+        </div>
+        <div class="mb-3">
+            <label for="designation" class="form-label">Designation</label>
+            <input type="text" class="form-control" id="designation" name="designation" value="{{myprofile.designation}}"/>
+        </div>
+        <div class="mb-3">
+            <label for="country" class="form-label">Country</label>
+            <input type="text" class="form-control" id="country" name="country" value="{{myprofile.Country}}" />
+        </div>
+        
+        <div class="mb-3">
+            <label for="city" class="form-label">City</label>
+            <input type="text" class="form-control" id="city" name="city" value="{{myprofile.city}}"/>
+        </div>
+        
+        <div class="mb-3">
+            <label for="bio" class="form-label">Bio</label>
+            <textarea name="bio" id="bio" rows="3" class="form-control"  style="width: 100%;">{{myprofile.Bio}}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="pimage" class="form-label">Profile Image</label>
+            <input type="file" accept="image/*" class="form-control" id="pimage" name="pimage" />
+        </div>
+        <div class="mb-3">
+            <label for="cimage" class="form-label">Cover Image</label>
+            <input type="file" accept="image/*" class="form-control" id="cimage" name="cimage" />
+        </div>
+       
+        <div class="mb-3">
+            <label for="facebook" class="form-label">Facebook URL</label>
+            <input type="url" class="form-control" id="facebook" name="facebook" value="{{myprofile.facebook_url}}"/>
+        </div>
+        <div class="mb-3">
+            <label for="instagram" class="form-label">Instagram URL</label>
+            <input type="url" class="form-control" id="instagram" name="instagram" value="{{myprofile.instagram_url}}"/>
+        </div>
+        <div class="mb-3">
+            <label for="twitter" class="form-label">Twitter URL</label>
+            <input type="url" class="form-control" id="twitter" name="twitter" value="{{myprofile.twitter_url}}"/>
+        </div>
+        <div class="mb-3">
+            <label for="public" class="form-label" >Show Profile Publically</label>
+            <input type="checkbox" id="public" name="public" />
+        </div> 
+        <button type="submit" class="btn btn-success btn-block">Update</button>
+        
+    </form>
+</div>
+<script>
+    let dob = document.querySelector("input[type='date']")
+    let today = new Date();    
+    let year = today.getFullYear()
+    let month = ("0" + (today.getMonth()+1)).slice(-2);
+    let day = ("0" + today.getDate()).slice(-2);
+    let maxDate = `${year}-${month}-${day}`;
+    dob.setAttribute("max",maxDate);
+
+    let dobDate = new Date("{{myprofile.Dob}}")
+    Date.prototype.isValid = function(){
+        return this.getTime() === this.getTime();
+    }
+    if (dobDate.isValid()){
+    dob.value = `${dobDate.getFullYear()}-${("0"+(dobDate.getMonth()+1)).slice(-2)}-${("0"+dobDate.getDate()).slice(-2)}`;
+    }
+
+
+     if ("{{myprofile.isPublic}}" == 'True'){
+         document.getElementById("public").setAttribute("checked","")
+     }
+     else{
+         document.getElementById("public").removeAttribute("checked","")
+     }
+    
+    if ("{{myprofile.Gender}}" == ""){
+        document.getElementById("gender").value = "MALE"
+    }
+    else{
+        document.getElementById("gender").value = "{{myprofile.Gender}}"
+    }
+    
+    let inputs = document.querySelectorAll("input,textarea")
+    inputs.forEach(span=>{
+
+        if (span.value == "None"){
+            span.value = "";
+        }
+    })
+</script>
+{% endblock body %}

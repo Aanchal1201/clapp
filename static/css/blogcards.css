@@ -1,0 +1,31 @@
+.card{
+    /* box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px; */
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    overflow: hidden;
+    border: none;
+    background-color: transparent;
+}
+.card-img{
+height: 200px;
+object-fit: cover;
+filter:brightness(0.5);
+transition: all 0.34s ease-in;
+background: linear-gradient(to left, black,grey, transparent);
+width: 100%;
+}
+.card-img-overlay{
+    bottom:12%;
+    top:auto;
+}
+.card-img-overlay h5{
+    font-size:1rem;
+}
+.card:hover img{ 
+    transform: scale(1.2) ;
+}
+.img-container{
+    overflow: hidden;
+}
+.card-footer{
+    background-color: white;
+}

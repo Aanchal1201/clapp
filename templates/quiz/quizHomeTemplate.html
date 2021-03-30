@@ -1,0 +1,35 @@
+
+        <div class="col-lg-3 col-md-5 col-sm-6 my-2">
+            <form action="/quiz/quizInstruction/{{quiz.title}}" method="post">
+                {% csrf_token %}
+                <div class="card">
+                    <img src="/media/{{quiz.image}}" class="card-img-top size" alt="...">
+                    <div class="card-body">
+                        <div class="card-title font-weight-bold">
+                            <h5 class="d-flex justify-content-between">
+                            <span>{{quiz.title}}</span>
+                            {% comment %} <span><i class="bi bi-bookmark"></i></span> {% endcomment %}
+                            </h5>
+                            <span class=" p-1 badge rounded-pill bg-dark text-white">{{quiz.timeTaken}} min</span>
+                            <span class="p-1 badge rounded-pill bg-secondary text-white">{{quiz.difficulty}}</span>
+                            <span class="p-1 badge rounded-pill bg-secondary text-white">{{count}} Questions</span>
+                        </div>
+
+                        {% if play == "True" %}
+
+                        <a href="/quiz/quizTitleScore/{{quiz.title}}" class="btn btn-info btn-custom" type="button">view
+                            score</a>
+
+                        {% else %}
+
+                        <button class="btn btn-success btn-custom" type="submit">Start Quiz</button>
+                        {% endif %}
+
+
+                    </div>
+                </div>
+            </form>
+        </div>
+        {% if forloop.last %}
+    </div>
+    {% endif %}

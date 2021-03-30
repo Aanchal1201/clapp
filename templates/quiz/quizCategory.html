@@ -1,0 +1,47 @@
+{% extends 'home/base.html' %} 
+{% block title %} Quiz Category | {{language}} {% endblock title %} 
+{% block css %}
+<style>
+  .rounded-pill {
+    font-size: 0.7em;
+    font-weight: 400;
+  }
+
+  .btn-custom {
+    font-size: 0.9rem;
+    text-transform: capitalize;
+  }
+   .card-img-top{
+        height:150px;
+    }
+</style>
+{% endblock css %} 
+{% block quizactive %}active {% endblock %} 
+{% block logQuizactive %}active{% endblock %} 
+{% block body %}
+
+<div class="container my-4">
+  {% for quiz,play,count in titles %} 
+  {% if forloop.first %}
+  <h3 class="mt-3 border-bottom">{{quiz.Language}}</h3>
+  <div class="row">
+    {% endif %} 
+    {% include 'quiz/quizHomeTemplate.html' %} 
+    {% endfor %}
+  </div>
+
+</div>
+    <script>
+        let bookmarks = document.querySelectorAll(".bi-bookmark")
+        bookmarks.forEach((element, index) => {
+            element.addEventListener("click", function () {
+                {% if not user.is_authenticated %}
+                window.location.href = '/account/login';
+                {% endif %}
+                element.classList.toggle("bi-bookmark-fill");
+                element.classList.toggle("bi-bookmark");
+                //form.submit with ajax request --> isBookmark : True Which title has bookmark
+            })
+        })
+    </script>
+  {% endblock body %}

@@ -1,0 +1,89 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block title %} Registration {% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/loginpage.css' %}">
+<style>
+ 
+</style>
+{% endblock css %}
+
+
+{% block body %}
+
+<section>
+
+  <div class="box">
+
+    <div class="square" style="--i:0;"></div>
+    <div class="square" style="--i:1;"></div>
+    <div class="square" style="--i:2;"></div>
+    <div class="square" style="--i:3;"></div>
+    <div class="square" style="--i:4;"></div>
+    <div class="square" style="--i:5;"></div>
+
+    <div class="lcontainer">
+
+      <div class="loader"></div>
+
+      <div class="form">
+        <h2 class="text-center">REGISTRATION</h2>
+        <div id="message" class="text-danger text-center"></div>
+
+        <form method="post" id="register">
+          {% csrf_token %}
+
+          <div class="inputBx">
+            <input type="text" class="inputElem" id="username" name="username" pattern="[a-zA-Z0-9_]+" minlength="5"
+              required>
+            <span>Username</span>
+            <img src="https://www.flaticon.com/svg/static/icons/svg/709/709699.svg" alt="user">
+            <p><small class="text-danger d-none userExist">This username is already exists</small></p>
+            <p><small class="text-danger d-none error">Your username be alphanumeric & _ and there is atleast 5 characters.</small></p>
+          </div>
+
+          <div class="inputBx">
+            <input type="text" id="email" name="email" class="inputElem" required
+              pattern="[a-z0-9._+-]+@[a-z0-9.-]+\.[a-z]{1,}$">
+            <span>Email</span>
+            <img src="https://www.flaticon.com/svg/static/icons/svg/725/725643.svg" alt="email">
+            <p><small class="text-danger d-none emailExist">This email is alread exist </small></p>
+            <p><small class="text-danger d-none error">Your email be like example@example.com </small></p>
+          </div>
+          <div class="inputBx password">
+            <input id="password" type="password" name="password" autocomplete="off" class="inputElem" required
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+            <span>Password</span>
+            <a name="pass" class="password-control" onclick="return show_hide_password(this);"></a>
+            <img src="https://www.flaticon.com/svg/static/icons/svg/1828/1828471.svg" alt="lock">
+            <p><small class="text-danger d-none error">Must contain at least one number and one uppercase and lowercase
+                letter, and at least 8 or more characters</small></p>
+          </div>
+          <div class="inputBx password">
+            <input id="cpass" type="password" name="cpass" autocomplete="off" required>
+            <span>Confirm Password</span>
+            <a name="pass" class="password-control" onclick="return show_hide_password(this);"></a>
+            <img src="https://www.flaticon.com/svg/static/icons/svg/1828/1828471.svg" alt="lock">
+            <p><small class="text-danger d-none error">Your Password not match with password</small></p>
+          </div>
+          <label class="remember"><input type="checkbox">
+            I agree with all <a href="#">Terms & conditions</a> and <a href="#">Privacy Policy</a> of this
+            website</label>
+          <div class="inputBx">
+            <input type="submit" value="Register">
+          </div>
+        </form>
+        <p>Alread have an account <a href="/account/login" style="text-decoration:underline;">Login</a></p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+{% endblock body %}
+{% block script %}
+<script src="{% static 'js/showHidePassword.js' %}"></script>
+<script src="{% static 'js/signupPage.js' %}"></script>
+{% endblock script %}

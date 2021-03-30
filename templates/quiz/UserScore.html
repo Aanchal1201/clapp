@@ -1,0 +1,59 @@
+{% extends 'home/base.html' %}
+
+{% block title %} Quiz User Score Board{% endblock title %}
+
+{% block css %}
+<style>
+
+</style>
+{% endblock css %}
+
+{% block quizactive %}active {% endblock %}
+{% block logQuizactive %}active{% endblock %}
+{% block body %}
+
+<div class="container my-4">
+    <h2 class="text-center">Your Quiz Score</h2>
+    <table class="table my-4 text-center">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Language</th>
+                <th scope="col">Quiz Name</th>
+                <th scope="col">Difficulty Level</th>
+                <th scope="col">Date & Time</th>
+                <th scope="col">Result</th>
+                <th scope="col">Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for score in userscore %}
+            <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{score.quizTitle.Language}}</td>
+                <td>{{score.quizTitle.title}}</td>
+                <td>{{score.quizTitle.difficulty}}</td>
+                <td>{{score.played_date}}</td>
+                <td id="percent{{forloop.counter}}">{{score.user_score}}/{{score.total_score}}</td>
+                <td><a href="/quiz/quizScore/{{score.id}}" role="button" class="btn btn-primary">View Result</a></td>
+                <script>
+                    var percent = document.querySelector("#percent{{forloop.counter}}")
+                    var percentage = Number((Number("{{score.user_score}}")/Number("{{score.total_score}}")*100).toFixed(2));
+                    percent.innerHTML = `${percentage} %`;
+                </script>
+            </tr>
+           
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if notPlay %}
+     <div class="text-center" style="margin-top:60px;">
+        <h5>You not play any Quiz Yet!!</h5>
+        <p>Click on  <a href="/quiz" role="button" class="btn btn-primary m-2">Play Quiz</a> to start your first quiz..</p>
+    </div>
+    {% endif %}
+   
+
+</div>
+
+{% endblock body %}

@@ -1,0 +1,71 @@
+{% extends 'home/base.html' %}
+
+{% block title %} Quiz Result {% endblock title %}
+
+{% block css %}
+<style>
+    .list-group-item span{
+        width:40%;
+    }
+    .list-group-item span:nth-child(1){
+        font-weight:bold;
+    }
+    .list-group-item{
+        display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    margin: auto;
+    color:black;
+    }
+</style>
+{% endblock css %}
+
+{% block quizactive %}active {% endblock %}
+{% block logQuizactive %}active{% endblock %}
+{% block body %}
+
+<div class="container my-4">
+    {% if isNotUser %}
+    <p style="min-height:90vh">Either You are not <b> login! </b>or you are trying to look something false!! Please try your own result!!</p>
+    {% else %}
+    <div class="card border-secondary mb-3" style="width: 80%;margin: auto;">
+  <div class="card-header bg-transparent border-secondary text-center font-weight-bold ">{{title.title}} ({{title.difficulty}})</div>
+  <div class="card-body text-secondary">
+    {% comment %} <h5 class="card-title">Success card title</h5> {% endcomment %}
+    <p class="card-text">
+        <ul class="list-group">
+    <li class="list-group-item font-weight-bold"><span>Description</span><span>Status</span></li>
+    <li class="list-group-item"><span>Attempted Questions</span><span id="attempt"></span></li>
+    <li class="list-group-item"><span>Unattempted Questions</span><span>{{unanswered}}</span></li>
+    <li class="list-group-item"><span>Total Correct Answers</span><span>{{user_score}}</span></li>
+    <li class="list-group-item"><span>Total Incorrect Answers</span><span id="incorrect"></span></li>
+    <li class="list-group-item"><span>Time Consume</span><span>{{time}}</span></li>
+    <li class="list-group-item"><span>Score</span><span>{{user_score}} out of {{total_score}}</span></li>
+    <li class="list-group-item"><span>Result</span><span id="percent"></span></li>
+</ul>
+    </p>
+  </div>
+  <div class="card-footer bg-transparent border-secondary text-center">
+  <a href="/quiz/viewAnswer/{{id}}" role="button" class="btn btn-success">View Answer</a>
+  {% if notGiveFeedback %}
+  <form action="/quiz/feedback" method="post" class="d-inline-block">
+  {% csrf_token %}
+  <input type="hidden" name="quizTitle" value="{{title}}">
+  <button type="submit" class="btn btn-primary">Feedback</button>
+  </form>
+  {% endif %}
+  </div>
+</div>
+</div>
+ <script>
+    percentage = Number((Number("{{user_score}}")/Number("{{total_score}}")*100).toFixed(2));
+    document.getElementById("percent").innerHTML = `${percentage} %`;
+    incorrect = Number("{{total_score}}")-Number("{{user_score}}")-Number("{{unanswered}}")
+    document.getElementById("incorrect").innerHTML = incorrect;
+    attempt = Number("{{user_score}}") + incorrect;
+    document.getElementById("attempt").innerHTML = attempt;
+ </script>
+   {% endif %}
+{% endblock body %}

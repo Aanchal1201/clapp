@@ -1,0 +1,59 @@
+{% extends 'home/base.html' %} 
+{% block title %} Quiz {% endblock title %} {% block css %}
+<style>
+    .rounded-pill {
+        font-size: 0.7em;
+        font-weight: 400;
+    }
+
+    .btn-custom {
+        font-size: 0.9rem;
+        text-transform: capitalize;
+    }
+    .card-img-top{
+        height:150px;
+    }
+</style>
+{% endblock css %} 
+{% block quizactive %}active {% endblock %} 
+{% block logQuizactive %}active{% endblock %} 
+{% block body %}
+
+<div class="container my-3">
+    <h2 class="border-bottom d-inline-block p-2 px-4 rounded text-white bg-dark">
+        Your Quiz
+    </h2>
+    <h2 class="border-bottom d-inline-block p-2 px-4 rounded text-white bg-dark">
+        <a href="/quiz/leaderboard" class="text-light">LeaderBoard </a>
+    </h2>
+    {% for title in allTitles %}
+    {% for quiz,play,count in title %} 
+        {% if forloop.first %}
+    <h3 class="mt-3 d-flex justify-content-between border-bottom">
+        <span>{{quiz.Language}}</span>
+        {% if quiz.Language is not None %}
+        <span><a href="/quiz/category/{{quiz.Language}}" role="button" class="btn btn-primary m-2">View All</a></span>
+        {% endif %}
+    </h3>
+    <div class="row">
+        {% endif %} 
+        {% include 'quiz/quizHomeTemplate.html' %} 
+        {% endfor %} 
+        {%endfor %}
+    </div>
+    <script>
+        let bookmarks = document.querySelectorAll(".bi-bookmark")
+        bookmarks.forEach((element, index) => {
+            element.addEventListener("click", function () {
+                {% if not user.is_authenticated %}
+                window.location.href = '/account/login';
+                {% endif %}
+                element.classList.toggle("bi-bookmark-fill");
+                element.classList.toggle("bi-bookmark");
+                //form.submit with ajax request --> isBookmark : True Which title has bookmark
+            })
+        })
+    </script>
+
+</div>
+    {% endblock body %}

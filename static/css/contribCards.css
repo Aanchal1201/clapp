@@ -1,0 +1,33 @@
+:root {
+  --first-color: rgba(70, 70, 70, 1);
+}
+.card-element {
+  border-radius: 5px;
+  padding: 5px;
+  height: 175px;
+  display: flex;
+  justify-content: center;
+  color: white;
+  flex-direction: column;
+  padding-left: 45px;
+  text-decoration: none;
+}
+.card-element:nth-child(4n + 1) {
+  background: linear-gradient(to right, var(--first-color), rgb(255, 190, 11));
+}
+.card-element:nth-child(4n + 2) {
+  background: linear-gradient(to right, var(--first-color), rgb(31, 255, 162));
+}
+.card-element:nth-child(4n + 3) {
+  background: linear-gradient(to right, var(--first-color), rgb(18, 30, 54));
+}
+.card-element:nth-child(4n + 4) {
+  background: linear-gradient(to right, var(--first-color), rgb(250, 63, 63));
+}
+.card-element:hover {
+  text-decoration: none;
+  color: white;
+}
+.card-element h1 {
+  font-size: 3.5rem;
+}

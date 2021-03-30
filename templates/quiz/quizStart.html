@@ -1,0 +1,365 @@
+{% extends 'home/base.html' %}
+
+{% block title %} Quiz Start {% endblock title %}
+
+{% block css %}
+<style>
+ *{
+        user-select: none;
+    }
+    .form-control-plaintext:focus {
+        border: none !important;
+        outline: none !important;
+    }
+
+    .form-control-plaintext {
+        user-select: none;
+    }
+
+    .buttons button {
+        width: 80px;
+    }
+
+    .ques {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 8px;
+        color: white;
+        cursor: pointer;
+    }
+    .box{
+        width: 300px;
+        border: 1px solid grey;
+        border-radius: 5px;
+        height: 450px;
+    }
+    .question-palette {
+        display: flex;
+        
+        padding: 10px;
+        flex-wrap: wrap;
+        height: 250px;
+        align-content: flex-start;
+        overflow: auto;
+        justify-content: start;
+    }
+
+    .pentagon {
+        width: 30px;
+        display: inline-block;
+        height: 30px;
+        background: #1e90ff;
+        -webkit-clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+        clip-path: polygon(0% 0%, 65% 0%, 100% 50%, 65% 100%, 0% 100%);
+        margin-right: 9px;
+    }
+
+    .labels div {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .labels {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 10px;
+    }
+
+    .questionContainer {
+        display: flex;
+        justify-content: space-around;
+        min-height:100vh;
+        padding-top:20px;
+    }
+
+    .question-contain {
+        width: 600px;
+    }
+
+    @media only screen and (max-width:1000px) {
+        .questionContainer {
+            flex-direction: column;
+        }
+
+        .question-palette {
+            height: 150px;
+        }
+
+        .box{
+            width: 70vw;
+            margin: auto;
+            height:auto;
+        }
+
+        .question-contain {
+            width: 70vw;
+            margin: auto;
+        }
+    }
+</style>
+{% endblock css %}
+
+{% block quizactive %}active {% endblock %}
+{% block logQuizactive %}active{% endblock %}
+{% block body %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Important: </strong> Please don't switch tabs!! Otherwise your quiz got automatically submit!
+</div>
+
+<div class="container my-2 questionContainer">
+    <div class="question-contain">
+        <form action="/quiz/handleQuiz" method="post" id="submit">
+            {% csrf_token %}
+            <input type="hidden" name="count" value="{{count}}">
+
+            {% for quiz in myquiz %}
+
+            {% if forloop.first %}
+            <h3 class="d-flex justify-content-between">
+                <span class=" d-inline-block p-2">{{quiz.title}}</span>
+                <span class="d-flex">
+                    <span class="form-control-plaintext">Time: </span>
+                    <input type="text" readonly class="form-control-plaintext" id="time" name="time"
+                        value="{{quiz.title.timeTaken}}" style="width: 80px;">
+                </span>
+            </h3>
+            {% endif %}
+
+
+            <div class="card border-secondary my-4 question-section">
+                <div class="card-header font-weight-bold border-secondary text-light bg-dark">Question
+                    {{forloop.counter}}
+                    of {{myquiz.count}}</div>
+                <div class="card-body text-dark">
+                    <h5 class="card-title">{{quiz.Ques}}</h5>
+                    <input type="hidden" name="{{ forloop.counter }}" value="{{quiz.Ques}}">
+                    <p class="card-text">
+
+                    <div class="form-check">
+                        <input class="form-check-input quiz{{forloop.counter}}" type="radio"
+                            name="quiz{{forloop.counter}}" value="{{quiz.choice1}}">
+                        <label class="form-check-label" for="{{quiz.choice1}}">
+                            {{quiz.choice1}}
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input quiz{{forloop.counter}}" type="radio"
+                            name="quiz{{forloop.counter}}" value="{{quiz.choice2}}">
+                        <label class="form-check-label" for="{{quiz.choice2}}">
+                            {{quiz.choice2}}
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input quiz{{forloop.counter}}" type="radio"
+                            name="quiz{{forloop.counter}}" value="{{quiz.choice3}}">
+                        <label class="form-check-label" for="{{quiz.choice3}}">
+                            {{quiz.choice3}}
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input quiz{{forloop.counter}}" type="radio"
+                            name="quiz{{forloop.counter}}" value="{{quiz.choice4}}">
+                        <label class="form-check-label" for="{{quiz.choice4}}">
+                            {{quiz.choice4}}
+                        </label>
+                    </div>
+                    </p>
+
+                    {% if forloop.last %}
+                    <div class="buttons d-flex justify-content-between">
+                        {% if myquiz.count > 1 %}
+
+                        <button type="button" class="btn btn-secondary btn-prev">Prev</button>
+                        {% endif %}
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-success" data-toggle="modal"
+                            data-target="#submitQuiz">Submit</button>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="submitQuiz" tabindex="-1" aria-labelledby="submitQuizLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="submitQuizLabel">{{quiz.title}}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to end the quiz?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Yes</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% elif forloop.first %}
+                    <div class="buttons d-flex justify-content-between">
+                        <button type="button" class="btn btn-primary btn-next">Next</button>
+                    </div>
+                    {% else %}
+                    <div class="buttons d-flex justify-content-between">
+                        <button type="button" class="btn btn-secondary btn-prev">Prev</button>
+                        <button type="button" class="btn btn-primary btn-next">Next</button>
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+
+            {% endfor %}
+        </form>
+    </div>
+    <div class="box">
+        <p class="text-center p-2 m-0 text-light bg-dark">Questions Palette</>
+        <div class="question-palette"></div>
+
+        <p class="text-center p-2 m-0 text-light bg-dark">Labels</>
+        <div class="labels">
+            <div>
+                <span class="pentagon bg-danger"></span>
+                <span>Not Answered</span>
+            </div>
+            <div>
+                <span class="pentagon bg-secondary"></span>
+                <span>Not Visited</span>
+            </div>
+            <div>
+                <span class="pentagon bg-success"></span>
+                <span>Answered</span>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let mins = document.getElementById("time");
+    let today = new Date().getTime();
+    let comingDate = today + Number(mins.value) * 60 * 1000;
+    let submitForm = document.getElementById("submit");
+
+    function times() {
+        let today = new Date().getTime()
+        let diff = comingDate - today;
+        mins.value = `${(
+            "0" + Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+        ).slice(-2)}:${("0" + Math.floor((diff % (1000 * 60)) / 1000)).slice(-2)}`;
+
+        if (diff <= 0) {
+            clearInterval(x);
+            submitForm.submit()
+        }
+    }
+    times();
+    var x = setInterval(times, 1000);
+
+    let labels = document.querySelectorAll("label.form-check-label");
+    labels.forEach(label => {
+        label.innerHTML = label.innerHTML.replace(/\\\"/g, "\"");
+        label.innerHTML = label.innerHTML.replace(/\\\\/g, "\\");
+    })
+
+    let questionSection = document.querySelectorAll(".question-section");
+    let prevBtns = document.querySelectorAll(".btn-prev");
+    let nextBtns = document.querySelectorAll(".btn-next");
+
+    function hide() {
+        questionSection.forEach(element => {
+            element.style.display = "None";
+            element.classList.remove("activeQues");
+        })
+    }
+    hide();
+    questionSection[0].style.display = "";
+    questionSection[0].classList.add("activeQues");
+    questionSection[0].classList.add("visited");
+
+    prevBtns.forEach((element, index) => {
+        element.addEventListener("click", function () {
+            hide()
+            questionSection[index].style.display = "";
+            questionSection[index].classList.add("activeQues");
+            questionSection[index].classList.add("visited");
+            visited();
+        })
+    })
+    nextBtns.forEach((element, index) => {
+        element.addEventListener("click", function () {
+            hide();
+            questionSection[index + 1].style.display = "";
+            questionSection[index + 1].classList.add("activeQues");
+            questionSection[index + 1].classList.add("visited");
+            visited();
+        })
+    })
+
+    let palette = document.querySelector(".question-palette");
+    let questionCount = Number("{{count}}");
+    for (let index = 0; index < questionCount; index++) {
+        let span = document.createElement("span");
+        span.innerHTML = index + 1;
+        span.classList.add("ques")
+        span.classList.add("bg-secondary")
+        palette.append(span)
+    }
+
+    let ques = document.querySelectorAll(".ques");
+    ques.forEach((element, index) => {
+        element.addEventListener("click", function () {
+            hide();
+            questionSection[index].style.display = "";
+            questionSection[index].classList.add("activeQues");
+            questionSection[index].classList.add("visited");
+            visited();
+        })
+    })
+
+    function visited() {
+        questionSection.forEach((element, index) => {
+            let inputs = document.querySelectorAll(`.quiz${index + 1}`)
+            inputs.forEach(inp => {
+                if (inp.checked) {
+                    element.classList.add("checked");
+                }
+            })
+            if (element.classList.contains("visited")) {
+                ques[index].classList.remove("bg-secondary");
+                ques[index].classList.add("bg-danger")
+                if (element.classList.contains("checked")) {
+                    ques[index].classList.remove("bg-secondary");
+                    ques[index].classList.remove("bg-danger");
+                    ques[index].classList.add("bg-success")
+                }
+            }
+        })
+    }
+
+
+    visited();
+    document.querySelector("nav").remove()
+    let warning = 1
+    document.addEventListener("visibilitychange",function(){
+        if (document.hidden){
+            if(warning == 0){
+                submitForm.submit()
+            }
+            else{
+            alert("You cannot switch tab! In case you do your quiz got automatically submit")
+            }
+            warning -= 1
+        }
+    },false)
+</script>
+{% endblock body %}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contribution Home Page</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{% static 'css/contrib.css' %}">
+    <style>
+      
+    </style>
+    {% block css %}
+    
+    {% endblock css %}
+
+</head>
+
+<body ng-app="app">
+    <section class='global-wrapper' ng-controller="ctrl">
+        <aside>
+            <ul>
+                <a href="/">
+                <li>
+                    <div class="nav-item">
+                            <i class="material-icons">arrow_back</i>
+                            <span>Back to Home</span>
+                        </div>
+                    </li>
+                </a>
+            </ul>
+
+            <!--top nav -->
+            <ul>
+    
+                <img src="/media/{{profile.profileImage}}" class="profile-img">
+                <h1 style="font-size: 1.3rem;margin-bottom: 25px;">{{request.user}}</h1>
+                <a href="/contribution">
+                <li class="{% block allCon %}{% endblock allCon %}" >
+                    <div class="nav-item">
+                        <i class="material-icons">dashboard</i>
+                        <span>All</span>
+                    </div>
+                </li>
+                </a>
+                 <a href="/contribution/blog">
+                <li class="{% block blogCon %}{% endblock blogCon %}" >
+                    <div class="nav-item">
+                        <i class="material-icons">note_add</i>
+                        <span>Blog</span>
+                    </div>
+                </li>
+                </a>
+                 <a href="/contribution/quiz">
+                <li class="{% block quizCon %}{% endblock quizCon %}" >
+                    <div class="nav-item">
+                        <i class="material-icons">language</i>
+                        <span>Quiz</span>
+                    </div>
+                </li>
+                </a>
+                 <a href="/contribution/snippet">
+                <li class="{% block snipCon %}{% endblock snipCon %}" >
+                    <div class="nav-item">
+                        <i class="material-icons">code</i>
+                        <span>Snippets</span>
+                    </div>
+                </li>
+                </a>
+            </ul>
+
+            <!--bottom nav -->
+            <ul>
+                 <a href="/account/logout">
+                <li>
+                    <div class="nav-item">
+                        <i class="material-icons">logout</i>
+                        <span>logout</span>
+                    </div>
+                </li>
+                </a>
+            </ul>
+        </aside>
+
+            {% block main %}
+            {% endblock main %}
+
+    </section>
+
+</body>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.min.js"></script>
+<script>
+    var app = angular.module('app', [])
+
+    app.controller('ctrl', function ($scope, $timeout) {
+        // coming soon
+    });
+</script>
+
+</html>
