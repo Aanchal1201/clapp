@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect,HttpResponse
 from django.contrib import messages
 from home.models import Contact,UserProfile
 from django.contrib.auth.models import User
+from blog.models import UserPost
 
 # Create your views here.
 
@@ -21,10 +22,9 @@ def userDashboard(request):
 
 
 def home(request):
-    # allposts = UserPost.objects.filter(adminStatus=True,userStatus="publish")[0:3]
-    # context = {'allposts':allposts}
-    # return render(request,'home/index.html',context)
-    return render(request,'home/index.html')
+    allposts = UserPost.objects.filter(adminStatus=True,userStatus="publish").order_by('-dateUpdate')[0:3]
+    context = {'allposts':allposts}
+    return render(request,'home/index.html',context)
 
 
 def contact(request):
@@ -33,6 +33,7 @@ def contact(request):
         email = request.POST['email']
         phone = request.POST['phone']
         desc = request.POST['desc']
+
         if len(name)<2 or len(email)<2 or len(phone)<5 or len(desc)<2:
             messages.error(request,"Please fill your all details correctly")
         else:

@@ -1,84 +1,73 @@
 {% extends 'home/base.html' %}
 {% block title %} Contact Us{% endblock title%} 
 {% block css %}
+{% load static %}
 <style>
-  .container {
-    width: 70%;
-  }
-  .container form input:invalid, textarea:invalid{
-    border:1px solid red;
-  }
 
 </style>
+<link rel="stylesheet" href="{% static 'css/contact.css' %}">
 {% endblock css %} 
  {% block contactactive %} active{% endblock contactactive %}
 {% block body %}
-<div class="container my-2">
+<div class="container">
+		<div class="innerwrap">
+		
+			<section class="section1 clearfix">
+				<div class="textcenter">
+					<span class="shtext">Contact Us</span>
+					<span class="seperator"></span>
+					<h1>Drop Us a Mail</h1>
+				</div>
+			</section>
+		
+			<section class="section2 clearfix">
+				<div class="col2 column1 first">
+          <div class="sec2innercont">
+						<div class="sec2addr">
+							<p><span class="collig">Location :</span> New Delhi, India</p>
+							<p><span class="collig">Phone :</span> +91 123456789</p>
+							<p><span class="collig">Email :</span> contact@clapp.com</p>
+							<p><span class="collig">Fax :</span> +91 123456789</p>
+						</div>
+					</div>
+					<script src='https://maps.googleapis.com/maps/api/js?v=3.exp'></script><div class="sec2map" style='overflow:hidden;height:450px;width:100%;'><div id='gmap_canvas' style='height:100%;width:100%;'></div><div><small><a href="http://embedgooglemaps.com">									embed google maps							</a></small></div><div><small><a href="http://freedirectorysubmissionsites.com/">free web directories</a></small></div><style>#gmap_canvas img{max-width:none!important;background:none!important}</style></div><script type='text/javascript'>function init_map(){var myOptions = {zoom:14,center:new google.maps.LatLng(19.075314480255834,72.88153973865361),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(19.075314480255834,72.88153973865361)});infowindow = new google.maps.InfoWindow({content:'<strong>My Location</strong><br>mumbai<br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);</script>
+			
+        </div>
+				<div class="col2 column2 last">
+					
+					<div class="sec2contactform">
+						<h3 class="sec2frmtitle">Send your queries?</h3>
+						<form method="post" action="">
+              {% csrf_token %}
+							<div class="clearfix">
+								<input class="col1 first" id="name" name="name" type="text" placeholder="Name" pattern="[a-zA-Z]{2,50}">
+                <small class="text-danger d-none">your name must contain alphabets only with min length 2 characters</small>
+							</div>
+							<div class="clearfix">
+								<input  class="col1 first" type="Email" id="email" placeholder="Email" name="email">
+                <small class="text-danger d-none">Use correct format of email i.e aahy@ghy.com</small>
+							</div>
+							<div class="clearfix">
+								
+								<input class="col1 first"  type="text" inputmode="tel" pattern="[0-9,+, ]{10,15}" id="phone" placeholder="Contact Number" name="phone" >
+                <small class="text-danger d-none">your phone number must be numeric not contain any text value, and min length must be 10 character long</small>
+              </div>
+							<div class="clearfix">
+								<textarea class="col1" id="desc" name="desc" minlength="4" cols="30" rows="7" placeholder="Your message here..."></textarea>
+                <small class="text-danger d-none">your description length must be 4 characters long</small>
+							</div>
+							<div class="clearfix"><input type="submit" value="Send" id="contact"></div>
+						</form>
+					</div>
 
-  <h3>Contact Us</h3>
-  <form method="post" action="/contact/" >
-  {% csrf_token %}
+				</div>
+			</section>
+		
+		</div>
+	</div>
 
-    <div class="form-group">
-      <label for="name">Full Name<span class="text-danger">*</span></label>
-      <input type="text" pattern="[a-zA-Z]{2,50}" class="form-control" id="name" placeholder="Enter your full name" name="name" />
-      <small class="text-danger d-none">your name must contain alphabets only with min length 2 characters</small>
-    </div>
-    
-    <div class="form-group">
-      <label for="email">Email address<span class="text-danger">*</span></label>
-      <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" name="email"/>
-      <small class="text-danger d-none">Use correct format of email i.e aahy@ghy.com</small>
-    </div>
-    
-    <div class="form-group">
-      <label for="phone">Email Phone Number<span class="text-danger">*</span></label>
-      <input type="text" inputmode="tel" pattern="[0-9,+, ]{10,15}" class="form-control" id="phone" placeholder="Enter phone Number" name="phone" />
-      <small class="text-danger d-none">your phone number must be numeric not contain any text value, and min length must be 10 character long</small>
-    </div>
-      
-    <div class="form-group">
-      <label for="desc">How may we help you?<span class="text-danger">*</span> </label>
-      <textarea class="form-control" id="desc" name="desc" rows="4" minlength="4"></textarea>
-      <small class="text-danger d-none">your description length must be 4 characters long</small>
-    </div>
-    
-    <button type="submit" class="btn btn-primary">Submit</button>
-  
-  </form>
-</div>
 <script>
-  let elems = document.querySelectorAll(".form-control");
-  elems.forEach(element => {
-
-    element.addEventListener("input",(e)=>{
-      if(!e.target.checkValidity() || element.value == ""){
-        element.nextElementSibling.classList.remove("d-none")
-
-      }
-      else{
-        element.nextElementSibling.classList.add("d-none")
-      }
-      
-    })
-  });
-
-  document.querySelector(".container form button[type=submit]").addEventListener("click",(e)=>{
-    let errors = document.querySelectorAll(".form-group small")
-    let err = false;
-    errors.forEach(error=>{
-      error.previousElementSibling.setAttribute("required","true")
-      if(error.previousElementSibling.value == ""){
-        error.classList.remove("d-none")
-      }
-      if(!error.classList.contains("d-none")){
-        err = true
-        e.preventDefault()
-      }
-    });
-    if (!err){
-      document.querySelector(".container form button[type=submit]").submit()
-    }
-  })
+ 
 </script>
+<script src="{% static 'js/contact.js' %}"></script>
 {% endblock body %}

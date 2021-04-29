@@ -4,8 +4,8 @@
 {% block css %} {% load static %}
 <link rel="stylesheet" href="{% static 'css/blogcards.css' %}" />
 <link rel="stylesheet" href="{% static 'css/blogHome.css' %}" />
+<link rel="stylesheet" href="{% static 'css/bubbles.css' %}">
 <style>
-  @import url("https://fonts.googleapis.com/css?family=Lilita+One");
 
   .form-inline-block {
     display: inline-block;
@@ -16,111 +16,6 @@
     bottom: 26%;
   }
 
-  body {
-    background: rgb(231, 230, 230);
-    overflow-x: hidden;
-  }
-
-  .bubbles {
-    background-image: linear-gradient(#ff6633, #660066);
-    font-family: "Lilita One";
-    overflow: hidden;
-    font-size: 1em;
-    color: #fff3e0;
-    text-align: center;
-  }
-
-  .bubble {
-    position: absolute;
-    width: 10em;
-    height: 10em;
-    z-index: 100;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    background: radial-gradient(ellipse at center,
-        rgba(255, 255, 255, 0.5) 0%,
-        rgba(255, 255, 255, 0) 70%);
-    box-shadow: inset 0 20px 30px rgba(255, 255, 255, 0.4),
-      inset 1em 1em 1em rgba(255, 255, 255, 0.6), 0 1em 2em rgba(0, 0, 0, 0.25);
-  }
-
-  .bubble:hover {
-    display: none;
-  }
-
-  .b1 {
-    animation: floatup 10s linear infinite,
-      sideways 5s ease-in-out infinite alternate;
-    left: 10%;
-    top: 100%;
-  }
-
-  .b2 {
-    animation: floatup 5s linear infinite,
-      sideways 4s ease-in-out 1s infinite alternate;
-    left: 15%;
-    top: 30%;
-    transform: scale(0.7);
-  }
-
-  .b3 {
-    animation: floatup 4s linear infinite,
-      sideways 6s ease-in-out 6s infinite alternate;
-    left: 20%;
-    transform: scale(1.2);
-  }
-
-  .b4 {
-    animation: floatup 6s linear infinite,
-      sideways 5s ease-in-out 3s infinite alternate;
-    left: 25%;
-    top: 90%;
-    transform: scale(0.5);
-  }
-
-  .b5 {
-    animation: floatup 8s linear infinite,
-      sideways 6s ease-in-out 3s infinite alternate;
-    left: 30%;
-    top: 30%;
-    transform: scale(1.1);
-  }
-
-  .b6 {
-    animation: floatup 7s linear infinite,
-      sideways 4s ease-in-out 3.5s infinite alternate;
-    left: 40%;
-    top: 50%;
-    transform: scale(0.7);
-  }
-
-  .b7 {
-    animation: floatup 6s linear infinite,
-      sideways 5s ease-in-out 4s infinite alternate;
-    left: 90%;
-    top: 90%;
-    transform: scale(0.6);
-  }
-
-  @keyframes floatup {
-    0% {
-      margin-top: 50%;
-    }
-
-    100% {
-      margin-top: -50%;
-    }
-  }
-
-  @keyframes sideways {
-    0% {
-      margin-left: 0em;
-    }
-
-    100% {
-      margin-left: 20em;
-    }
-  }
 </style>
 {% endblock css %}
 {% block body %}

@@ -1,26 +1,217 @@
 {% extends 'home/base.html' %}
-
+{% load static %}
 {% block title %} About {% endblock title %}
 
 {% block css %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
 <style>
-
+  .header::before{
+    content: "";
+    position: absolute;
+    top: 55px;
+    left: 42px;
+    width: 68%;
+    height: 4px;
+    background: var(--gradient-color);
+    border-radius: 2rem;
+  }
 </style>
 {% endblock css %}
 
 {% block aboutactive %}active {% endblock aboutactive %}
 {% block body %}
-<div class="container my-4">
-  <div class="jumbotron">
-    <h1 class="display-4">Hello, world!</h1>
-    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
-      featured content or information.</p>
-    <hr class="my-4">
-    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-    <p class="lead">
-      <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-    </p>
+
+<section id="mission">
+  <div class="card1">
+    <div class="card-image">
+      <div><img src="{% static 'images/vision.jpg' %}"  class="background-image"></div>
+      <div class="publication-details">
+        <a href="#" class="author">
+          <i class="far fa-user"></i>
+          CLAPP</a>
+        <span class="date"><i class="fas fa-calendar-alt"></i> 3rd April 2021</span>
+      </div>
+    </div>
+
+    <div class="card-content">
+      <h1 class="title">Our Mission</h1>
+      <h2 class="subtitle">Our main Objective?</h2>
+      <p class="description">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem iusto ullam, nihil sunt facilis pariatur earum expedita maxime architecto eligendi modi sapiente cumque atque quisquam.
+      </p>
+      <div class="cta">
+        <a href="#">Read more &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<section id="vision">
+  <div class="card1">
+    <div class="card-image">
+          <div><img src="{% static 'images/mission.jpg' %}"  class="background-image"></div>
+      <div class="publication-details">
+        <a href="#" class="author">
+          <i class="far fa-user"></i>
+          CLAPP</a>
+        <span class="date"><i class="fas fa-calendar-alt"></i> 3rd April 2021</span>
+      </div>
+    </div>
+
+    <div class="card-content">
+      <h1 class="title">Our Vision</h1>
+      <h2 class="subtitle">What we can do?</h2>
+      <p class="description">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem iusto ullam, nihil sunt facilis pariatur earum expedita maxime architecto eligendi modi sapiente cumque atque quisquam.
+      </p>
+      <div class="cta">
+        <a href="#">Read more &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<section>
+<main class="container">
+    <h1 class="header">Our process</h1>
+    <div class="card-wrapper">
+        <div class="card card-discover">
+            <div class="card-icon-title-wrapper">
+                <div class="card__icon">
+                    <div class="icon__wrapper"><i class="fas fa-7x fa-rocket icon__discover"></i></div>
+                </div>
+                <p class="card__title">Discover</p>
+            </div>
+            <p class="card__description">We learn all we can about their competitors, direct and indirect and
+                what they do to compete, what their unique selling point might be.</p>
+        </div>
+        <div class="card card-empathize">
+            <div class="card-icon-title-wrapper">
+                <div class="card__icon">
+                    <div class="icon__wrapper"><i class="fas fa-7x fa-hand-holding-heart icon__empathize"></i></div>
+                </div>
+                <p class="card__title">Empathise</p>
+            </div>
+            <p class="card__description">We spend time getting to know the user, & understand their
+                needs, wants and objectives. This helps us to set aside the
+                assumptions.</p>
+        </div>
+        <div class="card card-prototype">
+            <div class="card-icon-title-wrapper">
+                <div class="card__icon">
+                    <div class="icon__wrapper"><i class="fas fa-7x fa-pencil-ruler icon__prototype"></i></div>
+                </div>
+                <p class="card__title">Prototype</p>
+            </div>
+            <p class="card__description">We implement ideas into tangible forms from paper to digital. We
+                build prototypes to capture design concepts & test on users.</p>
+        </div>
+    </div>
+</main>
+</section>
+
+<section>
+<div class="container">
+<h1 class="header">Our Team</h1>
+  <div class="row justify-content-center">
+    <!-- Single Starts  -->
+      <div class="col-lg-5 col-md-6">
+      <div class="team__item set-bg" style="background-image: url({% static 'images/teamMember2.jpg' %});">
+        <div class="team__text">
+          <div class="team__title">
+            <h4>Furkan Giray</h4>
+            <span>Web Developer</span>
+          </div>
+          <p>Vestibulum dapibus odio quam, sit amet hendrerit dui ultricies consectetur. Ut viverra
+            porta leo, non tincidunt mauris condimentu eget. Vivamus non turpis elit. Aenean
+            ultricies nisl sit amet.</p>
+          <div class="team__social">
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Single Ends    -->
+    <div class="col-lg-5 col-md-6">
+      <div class="team__item set-bg" style="background-image: url('{% static 'images/teamMember1.jpg' %}');">
+        <div class="team__text">
+          <div class="team__title">
+            <h4>Furkan Giray</h4>
+            <span>Web Developer</span>
+          </div>
+          <p>Vestibulum dapibus odio quam, sit amet hendrerit dui ultricies consectetur. Ut viverra
+            porta leo, non tincidunt mauris condimentu eget. Vivamus non turpis elit. Aenean
+            ultricies nisl sit amet.</p>
+          <div class="team__social">
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+</section>
 
+<section class="text-center">
+<h1 class="header">What People Say</h1>
+<section id="testim" class="testim">
+<!--         <div class="testim-cover"> -->
+            <div class="wrap">
+
+                <span id="right-arrow" class="arrow right fa fa-chevron-right"></span>
+                <span id="left-arrow" class="arrow left fa fa-chevron-left "></span>
+                <ul id="testim-dots" class="dots">
+                    <li class="dot active"></li><!--
+                    --><li class="dot"></li><!--
+                    --><li class="dot"></li><!--
+                    --><li class="dot"></li><!--
+                    --><li class="dot"></li>
+                </ul>
+                <div id="testim-content" class="cont">
+                    
+                    <div class="active">
+                        <div class="img"><img src="{% static 'images/people1.jpg' %}" alt=""></div>
+                        <h2>Lorem P. Ipsum</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>                    
+                    </div>
+
+                    <div>
+                        <div class="img"><img src="{% static 'images/people2.jpg' %}" alt=""></div>
+                        <h2>Mr. Lorem Ipsum</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>                    
+                    </div>
+
+                    <div>
+                        <div class="img"><img src="{% static 'images/people34.jpg' %}" alt=""></div>
+                        <h2>Lorem Ipsum</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>                    
+                    </div>
+
+                    <div>
+                        <div class="img"><img src="{% static 'images/people4.jpg' %}" alt=""></div>
+                        <h2>Lorem De Ipsum</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>                    
+                    </div>
+
+                    <div>
+                        <div class="img"><img src="{% static 'images/people5.jpg' %}" alt=""></div>
+                        <h2>Ms. Lorem R. Ipsum</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>                    
+                    </div>
+
+                </div>
+
+            </div>
+<!--         </div> -->
+    </section>
+</section>
+
+<script src="https://use.fontawesome.com/1744f3f671.js"></script>
+<script src="{% static 'js/testimonials.js' %}"></script>
 {% endblock body %}

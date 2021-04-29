@@ -14,18 +14,52 @@
         height:150px;
     }
 </style>
+<style>
+.quizBlock{
+    height:600px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    position: relative;
+    color: white;
+}
+.quizBlock::before{
+    content: '';
+    position: absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeWMN5BFmDD6_khJ40Ya8imcakDr97ACGD2g&usqp=CAU');
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+    filter: blur(1px);
+}
+</style>
 {% endblock css %} 
 {% block quizactive %}active {% endblock %} 
 {% block logQuizactive %}active{% endblock %} 
 {% block body %}
 
+<div class="quizBlock">
+    <h1>Play Programming Quiz</h1>
+    <p>& Check your knowledge</p>
+    <div>
+    <a href="#Quiz" role="button" class="btn btn-primary">Get Started</a>
+    <a href="/quiz/leaderboard" role="button" class="btn btn-primary">LeaderBoard</a>
+    </div>
+</div>
+
 <div class="container my-3">
-    <h2 class="border-bottom d-inline-block p-2 px-4 rounded text-white bg-dark">
+    {% comment %} <h2 class="border-bottom d-inline-block p-2 px-4 rounded text-white bg-dark">
         Your Quiz
     </h2>
     <h2 class="border-bottom d-inline-block p-2 px-4 rounded text-white bg-dark">
         <a href="/quiz/leaderboard" class="text-light">LeaderBoard </a>
-    </h2>
+    </h2> {% endcomment %}
+
     {% for title in allTitles %}
     {% for quiz,play,count in title %} 
         {% if forloop.first %}
@@ -41,7 +75,7 @@
         {% endfor %} 
         {%endfor %}
     </div>
-    <script>
+    <!-- <script>
         let bookmarks = document.querySelectorAll(".bi-bookmark")
         bookmarks.forEach((element, index) => {
             element.addEventListener("click", function () {
@@ -50,10 +84,11 @@
                 {% endif %}
                 element.classList.toggle("bi-bookmark-fill");
                 element.classList.toggle("bi-bookmark");
-                //form.submit with ajax request --> isBookmark : True Which title has bookmark
+                //form.submit with ajax request 
+                isBookmark : True Which title has bookmark
             })
         })
-    </script>
+    </script> -->
 
 </div>
     {% endblock body %}
