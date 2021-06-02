@@ -24,8 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '%pn^ssfxvfr@1^42fqo00zis3sxag=$co7v8mi@+6lfn3nr54m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-ALLOWED_HOSTS = []
+DEBUG = False
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 
@@ -48,10 +48,11 @@ INSTALLED_APPS = [
     'contrib.apps.ContribConfig',
 ]
 
-# BOOTSTRAP_ADMIN_SIDEBAR_MENU = False
+BOOTSTRAP_ADMIN_SIDEBAR_MENU = False
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
