@@ -24,6 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '%pn^ssfxvfr@1^42fqo00zis3sxag=$co7v8mi@+6lfn3nr54m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = False
 ALLOWED_HOSTS = ['127.0.0.1','clapp-website.herokuapp.com/']
 
@@ -146,10 +147,13 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static')
 ]
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST_USER = 'testingMajorProject@gmail.com'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_PASSWORD = "Test@1201"
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST_USER = 'testingMajorProject@gmail.com'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_PASSWORD = "Test@1201"
