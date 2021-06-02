@@ -26,7 +26,7 @@ SECRET_KEY = '%pn^ssfxvfr@1^42fqo00zis3sxag=$co7v8mi@+6lfn3nr54m'
 # SECURITY WARNING: don't run with debug turned on in production!
 
 DEBUG = False
-ALLOWED_HOSTS = ['127.0.0.1','clapp-website.herokuapp.com/']
+ALLOWED_HOSTS = ['127.0.0.1','clapp-website.herokuapp.com']
 
 
 
@@ -147,7 +147,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static')
 ]
 
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
