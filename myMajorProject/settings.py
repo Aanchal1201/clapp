@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
-from django import django_heroku
+# from django import django_heroku
 from django.contrib.messages import constants as messages
 from pathlib import Path
 
@@ -35,7 +35,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     # 'myMajorProject.apps.SuitConfig',
-    'bootstrap_admin',
+    # 'bootstrap_admin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -159,4 +159,4 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_PASSWORD = "Test@1201"
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())

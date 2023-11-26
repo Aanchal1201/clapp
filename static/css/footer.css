@@ -1,23 +1,23 @@
- :root{
-  --body-background-color:rgb(30,30,30);
-      --primary-color:#ea830e;
-       --gradient-color: linear-gradient(
+:root{
+    --body-background-color:rgb(30,30,30);
+    --primary-color:#ea830e;
+    --gradient-color: linear-gradient(
     90deg,
     rgb(255, 88, 88, 0.8),
     rgb(240, 152, 25, 0.8)
   );
-  }
+}
   
   
-    .navbar-sticky{
-      position: sticky;
+.navbar-sticky{
+    position: sticky;
     top: 0;
     left: 0;
     right: 0;
     z-index: 10;
-    }
+}
 
-    .new_footer_area{
+.new_footer_area{
   background: var(--body-background-color);
 }
 
